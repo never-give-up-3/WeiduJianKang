@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--MainActivity 主页的按钮-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/center_image" android:state_checked="false"></item>
+    <item android:drawable="@drawable/huabi" android:state_checked="true"></item>
+
+</selector>

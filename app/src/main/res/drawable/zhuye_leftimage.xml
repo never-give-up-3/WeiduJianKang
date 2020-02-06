@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--MainActivity 主页的按钮-->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+ <item android:drawable="@drawable/left_image2" android:state_checked="false"></item>
+    <item android:drawable="@drawable/left_image1" android:state_checked="true"></item>
+</selector>

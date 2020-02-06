@@ -1,0 +1,433 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#dddddd"
+    xmlns:Fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    tools:context=".view.activity.SickCircleInfoActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:id="@+id/relr"
+                android:background="#ffffff"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="32dp"
+                    android:layout_marginLeft="20dp"
+                    android:background="@mipmap/dermatology"
+                    android:layout_height="32dp"/>
+
+
+                <TextView
+                    android:layout_marginTop="10dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="急寻:面神经炎的治疗方法"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:id="@+id/text_title"
+                    android:gravity="center"
+                    />
+                <ImageView
+                    android:layout_marginTop="10dp"
+                    android:layout_width="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="20dp"
+                    android:background="@mipmap/common_nav_message_black_s"
+                    android:layout_height="24dp"/>
+            </RelativeLayout>
+
+
+
+            <ScrollView
+                android:layout_below="@id/relr"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="656dp"
+                        android:background="#ffffff"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="#ffffff"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/text_xm"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="张三"
+                                android:textColor="@color/colorAccent3"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="[病症]"
+                                android:textColor="@color/colorAccent3"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/text_bingzhneg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="面神经炎"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="[科室]"
+                                android:textColor="@color/colorAccent3"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/text_neike"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="内科"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="[病症详情]"
+                                android:textColor="@color/colorAccent3"
+                                android:textSize="16sp" />
+
+                            <TextView
+                                android:id="@+id/text_xiangqing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="周围性神经炎"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="[治疗经历]"
+                                android:textColor="@color/colorAccent3"
+                                android:textSize="16sp" />
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/text_tiantan"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="30dp"
+                                    android:text="北京天坛医院" />
+
+                                <TextView
+                                    android:id="@+id/text_riqi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginLeft="30dp"
+                                    android:layout_marginRight="30dp"
+                                    android:text="时间" />
+
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/text_jingli"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="每天进行针扎按摩"
+                                android:textSize="12sp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="30dp"
+                                android:layout_marginTop="10dp"
+                                android:text="[相关图片]"
+                                android:textColor="@color/colorAccent3"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:id="@+id/info_img"
+                                android:layout_width="320dp"
+                                android:layout_height="144dp"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="5dp" />
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#ffffff">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentRight="true"
+                                android:layout_marginTop="18dp"
+                                android:layout_marginRight="20dp">
+
+                                <CheckBox
+                                    android:id="@+id/img_shoucang"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:background="@mipmap/common_button_collection_small_n"
+                                    android:button="@null" />
+
+                                <TextView
+                                    android:id="@+id/item_shoucang"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:layout_marginLeft="6dp"
+                                    android:text="收藏"
+                                    android:textSize="10sp" />
+
+                                <ImageView
+                                    android:id="@+id/jianyi"
+                                    android:layout_width="24dp"
+                                    android:layout_height="24dp"
+                                    android:layout_marginLeft="20dp"
+                                    android:background="@mipmap/common_icon_comment_samll_n" />
+
+                                <TextView
+                                    android:id="@+id/item_jianyi"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="5dp"
+                                    android:layout_marginLeft="6dp"
+                                    android:text="建议"
+                                    android:textSize="10sp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+
+                        <LinearLayout
+                            android:id="@+id/adoptFlag"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp">
+
+                                <TextView
+                                    android:layout_width="4dp"
+                                    android:layout_height="20dp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_centerVertical="true"
+                                    android:layout_marginLeft="10dp"
+                                    android:text="被采纳的建议"
+                                    android:textColor="#333333"
+                                    android:textSize="12sp" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="20dp">
+
+                                <com.facebook.drawee.view.SimpleDraweeView
+                                    android:id="@+id/img_HeadPic"
+                                    android:layout_width="32dp"
+                                    android:layout_height="32dp"
+                                    Fresco:failureImage="@mipmap/girl"
+                                    Fresco:placeholderImage="@mipmap/girl" />
+
+                                <TextView
+                                    android:id="@+id/name_NickName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@id/img_HeadPic"
+                                    android:text="可爱的姑娘"
+                                    android:textColor="#333333"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBottom="@id/img_HeadPic"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_toRightOf="@id/img_HeadPic"
+                                    android:text="获取1000金币"
+                                    android:textColor="#ffab26"
+                                    android:textSize="10sp" />
+
+                                <TextView
+                                    android:id="@+id/time_adoptTime"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_centerVertical="true"
+                                    android:text="201991515:55:56"
+                                    android:textColor="#333333"
+                                    android:textSize="12sp" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/text_adoptComment"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:text="hhhhhhhhhhhhh"
+                                android:textColor="#333333"
+                                android:textSize="12sp" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+            <RelativeLayout
+                android:id="@+id/patient_activity_relative_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#80000000"
+                android:visibility="gone"
+                >
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="100dp"
+                    android:id="@+id/recycler"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="30dp"
+                    android:layout_marginLeft="20dp">
+
+                    <ImageView
+                        android:id="@+id/patient_activity_iv_cancel"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@mipmap/common_icon_close_grey_n"/>
+
+                    <EditText
+                        android:id="@+id/patient_activity_et_content"
+                        android:layout_width="260dp"
+                        android:layout_height="40dp"
+                        android:layout_marginLeft="20dp"
+                        android:hint="在此留下高见吧!!"
+                        android:paddingLeft="10dp"
+                        android:background="@drawable/ed_back_shape"
+                        android:textSize="14sp"
+                        android:textColor="#ffffff"
+                        android:textColorHint="#ffffff"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/patient_activity_iv_send_content"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@mipmap/common_icon_send_white_n"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="25dp"
+                    android:layout_marginBottom="35dp"/>
+
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/wupinglun"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/img"
+                    android:background="@mipmap/none_comment"
+                    android:layout_centerInParent="true"
+                    android:layout_width="122dp"
+                    android:layout_height="122dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="#ffffff"
+                    android:text="暂无评论"
+                    android:layout_below="@id/img"
+                    android:layout_centerHorizontal="true"
+                    />
+            </RelativeLayout>
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/patient_activity_relative_release_sickCircle"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_alignParentBottom="true"
+        android:background="#ffffff">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@mipmap/the_bottom_bar"
+            android:layout_alignParentBottom="true"/>
+
+        <ImageView
+            android:id="@+id/patient_activity_iv_intent_release_sickCircle"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@mipmap/common_tab_circle_s"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

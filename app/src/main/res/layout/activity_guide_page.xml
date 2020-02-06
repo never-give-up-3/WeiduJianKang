@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent"
+    tools:context=".view.activity.GuidePageActivity"
+
+    android:orientation="vertical">
+   <LinearLayout
+       android:orientation="vertical"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content">
+
+       <com.bigkoo.convenientbanner.ConvenientBanner
+           android:id="@+id/page_banner"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent" />
+        <!--   <RadioGroup
+               android:layout_gravity="center_horizontal"
+               android:layout_marginTop="-40dp"
+               android:orientation="horizontal"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content">
+
+               <RadioButton
+                   android:id="@+id/rbt1"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+               <RadioButton
+                   android:id="@+id/rbt2"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+               <RadioButton
+                   android:id="@+id/rbt3"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content" />
+           </RadioGroup>-->
+
+       <!--@android:color/transparent-->
+       <!--android:visibility="gone"-->
+       <Button
+           android:layout_gravity="center_horizontal"
+           android:layout_marginTop="-155dp"
+           android:id="@+id/page_btn"
+           android:padding="@dimen/dp_35"
+           android:layout_width="@dimen/dp_100"
+           android:layout_height="@dimen/dp_40"
+           android:text="进入app"
+           android:background="@android:color/transparent"
+           android:visibility="gone"
+            />
+
+
+
+   </LinearLayout>
+
+
+
+</LinearLayout>
