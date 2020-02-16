@@ -25,6 +25,7 @@ import com.wd.health.model.bean.ChaXunShiPin_ResutBean;
 import com.wd.health.model.bean.Video_TablayoutDataBean;
 import com.wd.health.model.bean.Video_TablayoutResultBean;
 import com.wd.health.presenter.Video_CategoryListPresent;
+import com.wd.health.utils.CurtainView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,18 +44,9 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
     @BindView(R.id.bottom)
     LinearLayout bottom;
     Unbinder unbinder;
-    @BindView(R.id.rbt_one)
-    RadioButton rbtOne;
-    @BindView(R.id.rbt_two)
-    RadioButton rbtTwo;
-    @BindView(R.id.rbt_three)
-    RadioButton rbtThree;
-    @BindView(R.id.rbt_four)
-    RadioButton rbtFour;
-    @BindView(R.id.rbt_five)
-    RadioButton rbtFive;
-    @BindView(R.id.rbt_six)
-    RadioButton rbtSix;
+    @BindView(R.id.curtainview)
+    CurtainView curtainview;
+
 
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
@@ -68,6 +60,13 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
     private ChaXunShiPin_DataBean bean;
     private List<ChaXunShiPin_DataBean> result;
     private MyAdapter myAdapter;
+    private RadioButton rbt_one;
+    private RadioButton rbt_two;
+    private RadioButton rbt_three;
+    private RadioButton rbt_four;
+    private RadioButton rbt_five;
+    private RadioButton rbt_six;
+    private ImageView img_curtain_rope;
 
     @Override
     protected Video_CategoryListPresent providePresenter() {
@@ -83,28 +82,29 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
     public void succeed(Video_TablayoutResultBean video_tablayoutResultBean) {
         List<Video_TablayoutDataBean> result = video_tablayoutResultBean.getResult();
 
-            for (int i = 0; i < result.size(); i++) {
-                Video_TablayoutDataBean video_tablayoutDataBean = result.get(i);
-                String name = video_tablayoutDataBean.getName();
+        for (int i = 0; i < result.size(); i++) {
+            Video_TablayoutDataBean video_tablayoutDataBean = result.get(i);
+            String name = video_tablayoutDataBean.getName();
 
-                RadioButton radioButton = rbtlist.get(i);
-                radioButton.setText(name);
-                radioButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        list.clear();
-                        int id = video_tablayoutDataBean.getId();
-                        HashMap<String, Object> map = new HashMap<>();
-                        map.put("page",1);
-                        map.put("count",10);
-                        map.put("categoryId",id);
-                        mPresenter.chaXun(map);
-                        Log.d("id是",id+"");
-                    }
-                });
+            RadioButton radioButton = rbtlist.get(i);
+            radioButton.setText(name);
+            radioButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    list.clear();
+                    int id = video_tablayoutDataBean.getId();
+                    HashMap<String, Object> map = new HashMap<>();
+                    map.put("page", 1);
+                    map.put("count", 10);
+                    map.put("categoryId", id);
+                    mPresenter.chaXun(map);
+                    Log.d("id是", id + "");
+                }
+            });
 
-            }
         }
+    }
+
     @Override
     public void failure(Throwable throwable) {
 
@@ -112,17 +112,17 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
 
     @Override
     public void onChaXunShiPinSuccess(ChaXunShiPin_ResutBean chaXunShiPin_resutBean) {
-        Log.d("是否成功",chaXunShiPin_resutBean.getMessage());
-        Log.d("1111111111111","22222222222222");
+        Log.d("是否成功", chaXunShiPin_resutBean.getMessage());
+        Log.d("1111111111111", "22222222222222");
         result = chaXunShiPin_resutBean.getResult();
-        for (int i=0;i<result.size();i++){
+        for (int i = 0; i < result.size(); i++) {
             bean = result.get(i);
             shearUrl = bean.getShearUrl();
             String originalUrl = bean.getOriginalUrl();
             list.add(shearUrl);
             list.add(originalUrl);
         }
-        Log.d("456",list.size()+"");
+        Log.d("456", list.size() + "");
 
         ArrayList<String> list = this.list;
         myAdapter.setSlist(this.list);
@@ -146,23 +146,33 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
 
         initListener();
 
-        rbtlist.add(rbtOne);
-        rbtlist.add(rbtTwo);
-        rbtlist.add(rbtThree);
-        rbtlist.add(rbtFour);
-        rbtlist.add(rbtFive);
-        rbtlist.add(rbtSix);
+        rbtlist.add(rbt_one);
+        rbtlist.add(rbt_two);
+        rbtlist.add(rbt_three);
+        rbtlist.add(rbt_four);
+        rbtlist.add(rbt_five);
+        rbtlist.add(rbt_six);
 
     }
 
     @Override
     protected void initView() {
         super.initView();
+
+        rbt_one = (RadioButton) curtainview.findViewById(R.id.rbt_one);
+        rbt_two = (RadioButton) curtainview.findViewById(R.id.rbt_two);
+        rbt_three = (RadioButton) curtainview.findViewById(R.id.rbt_three);
+        rbt_four = (RadioButton) curtainview.findViewById(R.id.rbt_four);
+        rbt_five = (RadioButton) curtainview.findViewById(R.id.rbt_five);
+        rbt_six = (RadioButton) curtainview.findViewById(R.id.rbt_six);
+
+        img_curtain_rope = (ImageView) curtainview.findViewById(R.id.img_curtain_rope);
         myAdapter = new MyAdapter();
         mLayoutManager = new ViewPagerLayoutManager(getContext(), OrientationHelper.VERTICAL);
         mAdapter = new MyAdapter();
         mrecycler.setLayoutManager(mLayoutManager);
     }
+
     private void initListener() {
         mLayoutManager.setOnViewPagerListener(new OnViewPagerListener() {
 
@@ -269,22 +279,21 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
 
     @Override
     public void onChaXunShiPinFailure(Throwable e) {
-        Log.d("1111111111111","失败");
+        Log.d("1111111111111", "失败");
     }
 
 
-  public  class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
+    public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         //private int[] imgs = {R.mipmap.img_video_1,R.mipmap.img_video_2};
         //private int[] videos = {R.raw.video_1,R.raw.video_2};
-        public ArrayList<String> slist=new ArrayList<>();
+        public ArrayList<String> slist = new ArrayList<>();
 
 
+        public void setSlist(ArrayList<String> slist) {
+            this.slist = slist;
+        }
 
-      public void setSlist(ArrayList<String> slist) {
-          this.slist = slist;
-      }
-
-      public MyAdapter() {
+        public MyAdapter() {
         }
 
 
@@ -298,15 +307,13 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
         public void onBindViewHolder(ViewHolder holder, int position) {
             //holder.img_thumb.setImageResource(imgs[position%2]);
 
-         ArrayList<String> dlist=  Right_fragment.this.list;
-         Log.d("123",dlist.size()+"");
-         Log.d("489",slist.size()+"");
-            if (dlist.size()!=0){
+            ArrayList<String> dlist = Right_fragment.this.list;
+            Log.d("123", dlist.size() + "");
+            Log.d("489", slist.size() + "");
+            if (dlist.size() != 0) {
                 holder.videoView.setVideoURI(Uri.parse(dlist.get(position)));
                 //holder.videoView.setVideoURI(Uri.parse(dlist.get(position % 3)));
             }
-
-
 
 
         }

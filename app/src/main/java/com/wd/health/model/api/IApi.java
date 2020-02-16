@@ -34,9 +34,9 @@ import retrofit2.http.QueryMap;
  */
 public interface IApi {
 
-    @FormUrlEncoded
+   @FormUrlEncoded
     @POST("user/v1/login")
-    Observable<LoginBean> login(@FieldMap Map<String, Object> map);
+    Observable<LoginBean> login(@QueryMap Map<String, Object> map);
 
     //banner轮播
     @GET("share/v1/bannersShow")
@@ -47,7 +47,7 @@ public interface IApi {
     Observable<Video_TablayoutResultBean> tablyList();
 
     @GET("user/video/v1/findVideoVoList")
-    @Headers({"userId:68447","sessionId:1578713430968447"})
+    @Headers({"userId:91145","sessionId:1581151729091145"})
     Observable<ChaXunShiPin_ResutBean> chaXun_Vidio(@QueryMap Map<String,Object> map);
 
     //科室列表

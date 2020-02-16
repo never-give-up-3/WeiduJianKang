@@ -24,7 +24,7 @@ import io.reactivex.Observable;
 public class BannerModel implements BannerContract.IModel {
     @Override
     public void banner(IModelBack iModelBack) {
-        RetrofitManager.getInstance().create(IApi.class)
+       /* RetrofitManager.getInstance().create(IApi.class)
                 .banner()
                 .compose(CommonSchedulers.io2main())
                 .subscribe(new CommonObserver<BannerBean>() {
@@ -37,6 +37,6 @@ public class BannerModel implements BannerContract.IModel {
                     public void onError(Throwable e) {
                           iModelBack.onBannerFailure(e);
                     }
-                });
+                });*/
     }
 }

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <RelativeLayout
+
+        android:layout_centerHorizontal="true"
+        android:layout_width="@dimen/dp_300"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/img_curtain_ad"
+            android:gravity="center_horizontal"
+            android:background="#fff"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:gravity="center_horizontal"
+                android:id="@+id/rbt_one"
+                android:background="#E91E63"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                />
+            <RadioButton
+                android:gravity="center_horizontal"
+                android:id="@+id/rbt_two"
+                android:background="#2196F3"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                />
+            <RadioButton
+                android:gravity="center_horizontal"
+                android:id="@+id/rbt_three"
+                android:background="#3F51B5"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                />
+            <RadioButton
+                android:gravity="center_horizontal"
+                android:id="@+id/rbt_four"
+                android:background="#FF5722"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                />
+            <RadioButton
+                android:gravity="center_horizontal"
+                android:id="@+id/rbt_five"
+                android:background="#CDDC39"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                />
+            <RadioButton
+                android:gravity="center_horizontal"
+                android:id="@+id/rbt_six"
+                android:background="#CDDC39"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                />
+        </RadioGroup>
+
+        <ImageView
+            android:background="#f00"
+            android:id="@+id/img_curtain_rope"
+            android:layout_alignParentRight="true"
+            android:layout_width="@dimen/dp_10"
+            android:layout_height="@dimen/dp_90" />
+    </RelativeLayout>
+</LinearLayout>
