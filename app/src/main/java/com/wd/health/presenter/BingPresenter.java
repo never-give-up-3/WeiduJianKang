@@ -5,6 +5,7 @@ import com.wd.health.base.BasePresenter;
 import com.wd.health.contract.BingContract;
 import com.wd.health.model.BingModel;
 import com.wd.health.model.bean.DepartmentsBean;
+import com.wd.health.model.bean.PublishBean;
 import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
@@ -120,6 +121,29 @@ public class BingPresenter extends BasePresenter<BingContract.IView> implements 
                 if (isViewAttached()){
                     getView().SickInfoFailure(e);
                 }
+            }
+        });
+    }
+
+    @Override
+    public void Publish(Integer userId, String sessionId, Integer sickCircleId, String content) {
+        bingModel.Publish(userId, sessionId, sickCircleId, content, new BingContract.IModel.PModelCall() {
+            @Override
+            public void PublishSuccess(PublishBean publishBean) {
+                if (isViewAttached()){
+                    if (publishBean!=null && Constant.SUCCESS_CODE.equals(publishBean.getStatus())){
+                        getView().PublishSuccess(publishBean);
+                    }else {
+                        getView().PublishFailure(new Exception("服务器异常"));
+                    }
+                }
+            }
+
+            @Override
+            public void PublishFailure(Throwable e) {
+if (isViewAttached()){
+    getView().PublishFailure(e);
+}
             }
         });
     }

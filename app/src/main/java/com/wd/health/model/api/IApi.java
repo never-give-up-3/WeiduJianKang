@@ -4,6 +4,7 @@ import com.wd.health.model.bean.BannerBean;
 
 import com.wd.health.model.bean.ChaXunShiPin_ResutBean;
 import com.wd.health.model.bean.LoginBean;
+import com.wd.health.model.bean.PublishBean;
 import com.wd.health.model.bean.Video_TablayoutResultBean;
 
 import com.wd.health.model.bean.DepartmentsBean;
@@ -16,9 +17,11 @@ import com.wd.health.model.bean.SickCircleListBean;
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.Field;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
@@ -66,5 +69,10 @@ public interface IApi {
     //http://172.17.8.100/health/user/sickCircle/v1/findSickCircleInfo?sickCircleId=4
     @GET("health/user/sickCircle/v1/findSickCircleInfo")
     Observable<SickCircleInfoBean> getSickCircleInfo(@Query("sickCircleId") Integer sickCircleId);
+ //发表评论
+ //http://172.17.8.100/health/user/sickCircle/verify/v1/publishComment
+ @FormUrlEncoded
+ @POST("health/user/sickCircle/verify/v1/publishComment")
+ Observable<PublishBean> getpublish(@Header("userId") Integer userId, @Header("sessionId") String sessionId, @Field("sickCircleId") Integer sickCircleId , @Field("content") String content);
 
 }

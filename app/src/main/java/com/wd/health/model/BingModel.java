@@ -3,6 +3,7 @@ package com.wd.health.model;
 import com.wd.health.contract.BingContract;
 import com.wd.health.model.api.IApi;
 import com.wd.health.model.bean.DepartmentsBean;
+import com.wd.health.model.bean.PublishBean;
 import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
@@ -93,6 +94,24 @@ public class BingModel implements BingContract.IModel {
                     @Override
                     public void onError(Throwable e) {
                         fModelCall.SickInfoFailure(e);
+                    }
+                });
+    }
+
+    @Override
+    public void Publish(Integer userId, String sessionId, Integer sickCircleId, String content, PModelCall pModelCall) {
+        RetrofitManager.getInstance().create(IApi.class)
+                .getpublish(userId, sessionId, sickCircleId, content)
+                .compose(CommonSchedulers.io2main())
+                .subscribe(new CommonObserver<PublishBean>() {
+                    @Override
+                    public void onNext(PublishBean publishBean) {
+                        pModelCall.PublishSuccess(publishBean);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+pModelCall.PublishFailure(e);
                     }
                 });
     }
