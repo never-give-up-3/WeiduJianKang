@@ -1,7 +1,7 @@
 package com.wd.health.contract;
 
 import com.wd.health.base.IBaseView;
-import com.wd.health.model.bean.BannerBean;
+import com.wd.health.model.bean.homeBean.BannerBean;
 
 /**
  * @ProjectName: WDHealth
@@ -24,6 +24,9 @@ public interface BannerContract {
 
     interface IModel{
         void banner(IModelBack iModelBack);
+
+        void banner(IBannerContract.IModel.IModelBack iModelBack);
+
         interface IModelBack{
             void onBannerSuccess(BannerBean bannerBean);
             void onBannerFailure(Throwable e);

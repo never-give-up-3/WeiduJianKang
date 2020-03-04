@@ -1,24 +1,21 @@
 package com.wd.health.model.api;
 
-import com.wd.health.model.bean.BannerBean;
-
 import com.wd.health.model.bean.ChaXunShiPin_ResutBean;
 import com.wd.health.model.bean.LoginBean;
 import com.wd.health.model.bean.PublishBean;
 import com.wd.health.model.bean.Video_TablayoutResultBean;
 
 import com.wd.health.model.bean.DepartmentsBean;
-import com.wd.health.model.bean.LoginBean;
 import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
+import com.wd.health.model.bean.homeBean.BannerBean;
 
 
 import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.Field;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
