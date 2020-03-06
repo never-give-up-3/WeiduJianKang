@@ -44,35 +44,35 @@ public interface Video_CategoryListContract {
             void succeed(Video_TablayoutResultBean video_tablayoutResultBean);
             void failure(Throwable throwable);
         }
-        void chaXun(Map<String,Object> map, Video_CategoryListContract.Video_CategoryModel.IModelBack iModelBack);
+        void chaXun(Map<String, Object> map, IModelBack iModelBack);
         interface IModelBack{
             void onChaXunShiPinSuccess(ChaXunShiPin_ResutBean chaXunShiPin_resutBean);
             void onChaXunShiPinFailure(Throwable e);
         }
 
         //视频收藏的m层
-        void colleCtion(Integer id,String session,Map<String,Object> map,CollectioncallBack collectioncallBack );
+        void colleCtion(Integer id, String session, Map<String, Object> map, CollectioncallBack collectioncallBack);
         interface  CollectioncallBack{
             void collectionSucceed(CollectBean collectBean);
             void collectionFailure(Throwable throwable);
         }
 
         //视频弹幕
-        void comment(Map<String,Object> map,Comments comments);
+        void comment(Map<String, Object> map, Comments comments);
         interface  Comments{
             void commentSucceed(Commentbean comment);
             void commentFailure(Throwable throwable);
         }
 
         //视频的购买
-        void vidioBuy(Map<String,Object> map, Vidiobuy comments);
+        void vidioBuy(Map<String, Object> map, Vidiobuy comments);
         interface  Vidiobuy{
             void videobuySucceed(Videobuybean videobuybean);
             void videobuyFailure(Throwable throwable);
         }
 
         //查询视频评论列表
-        void commentList(Integer id,CommentList commentList);
+        void commentList(Integer id, CommentList commentList);
         interface CommentList{
             void commentListSucceed(VideoCommentList videoCommentList);
             void commentListFailure(Throwable throwable);
@@ -82,13 +82,13 @@ public interface Video_CategoryListContract {
     //p层的
     interface Video_CategoryPresent{
         void categoryListShow();
-        void chaXun(Map<String,Object> map);
+        void chaXun(Map<String, Object> map);
         //视频收藏的m层
-        void colleCtion(Integer id,String session,Map<String,Object> map);
+        void colleCtion(Integer id, String session, Map<String, Object> map);
         //视频弹幕
-        void comment(Map<String,Object> map);
+        void comment(Map<String, Object> map);
         //视频的购买
-        void vidioBuy(Map<String,Object> map);
+        void vidioBuy(Map<String, Object> map);
 
         //视频评论列表的查询
         void commentList(Integer id);

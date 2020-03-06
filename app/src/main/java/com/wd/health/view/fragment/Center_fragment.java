@@ -18,7 +18,6 @@ import com.wd.health.adapter.SickAdapter;
 import com.wd.health.base.BaseFragment;
 import com.wd.health.contract.BingContract;
 import com.wd.health.model.bean.DepartmentsBean;
-import com.wd.health.model.bean.PublishBean;
 import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
@@ -133,16 +132,6 @@ public class Center_fragment extends BaseFragment<BingPresenter> implements Bing
 
     @Override
     public void SickInfoFailure(Throwable e) {
-
-    }
-
-    @Override
-    public void PublishSuccess(PublishBean publishBean) {
-
-    }
-
-    @Override
-    public void PublishFailure(Throwable e) {
 
     }
 

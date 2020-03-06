@@ -40,7 +40,7 @@ public class DeparAdapter extends RecyclerView.Adapter<DeparAdapter.ViewHolder> 
     }
 
     public interface liangId{
-        void liang(String s,int id);
+        void liang(String s, int id);
     }
 
     public liangId liangId;

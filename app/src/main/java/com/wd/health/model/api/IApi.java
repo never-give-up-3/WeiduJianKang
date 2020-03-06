@@ -1,5 +1,7 @@
 package com.wd.health.model.api;
 
+import com.wd.health.model.bean.BannerBean;
+
 import com.wd.health.model.bean.ChaXunShiPin_ResutBean;
 import com.wd.health.model.bean.CollectBean;
 import com.wd.health.model.bean.Commentbean;
@@ -7,17 +9,13 @@ import com.wd.health.model.bean.LogainBean;
 import com.wd.health.model.bean.LoginBean;
 import com.wd.health.model.bean.RegisterBean;
 import com.wd.health.model.bean.VideoCommentList;
-import com.wd.health.model.bean.PublishBean;
 import com.wd.health.model.bean.Video_TablayoutResultBean;
 
 import com.wd.health.model.bean.DepartmentsBean;
+import com.wd.health.model.bean.LoginBean;
 import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
-import com.wd.health.model.bean.homeBean.BannerBean;
-import com.wd.health.model.bean.homeBean.HomeSuoSouBean;
-import com.wd.health.model.bean.homeBean.JKZXBean;
-import com.wd.health.model.bean.homeBean.JKZiXunListBean;
 import com.wd.health.model.bean.Videobuybean;
 import com.wd.health.model.bean.YanZhengMaBean;
 import com.wd.health.utils.CommonSchedulers;
@@ -26,7 +24,7 @@ import com.wd.health.utils.CommonSchedulers;
 import java.util.Map;
 
 import io.reactivex.Observable;
-import retrofit2.http.Field;
+import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -58,7 +56,7 @@ public interface IApi {
     Observable<Video_TablayoutResultBean> tablyList();
 
     @GET("user/video/v1/findVideoVoList")
-    @Headers({"userId:91145", "sessionId:1581151729091145"})
+    @Headers({"userId:91145","sessionId:1581151729091145"})
     Observable<ChaXunShiPin_ResutBean> chaXun_Vidio(@QueryMap Map<String, Object> map);
 
     //科室列表
@@ -80,25 +78,30 @@ public interface IApi {
     //视频收藏的接口
     @POST("user/video/verify/v1/addUserVideoCollection")
     @Headers({"userId:58145","sessionId:1582427298358145"})
-    Observable<CollectBean> colleCtion(@Header("userId")  Integer userid ,@Header("sessionId") String sessionid, @QueryMap Map<String,Object> map);
+    Observable<CollectBean> colleCtion(@Header("userId") Integer userid, @Header("sessionId") String sessionid, @QueryMap Map<String, Object> map);
     //视频弹幕
    @POST("user/video/verify/v1/addVideoComment")
    @Headers({"userId:58145","sessionId:1582427298358145"})
-   Observable<Commentbean> comment(@QueryMap Map<String,Object> map);
+   Observable<Commentbean> comment(@QueryMap Map<String, Object> map);
 
    //视频的购买
    @POST("user/video/verify/v1/videoBuy")
    @Headers({"userId:58145","sessionId:1582427298358145"})
-   Observable<Videobuybean> buy(@QueryMap Map<String,Object> map);
+   Observable<Videobuybean> buy(@QueryMap Map<String, Object> map);
 
 
    //查询视频的评论
    @GET("user/video/v1/findVideoCommentList")
 
-    //发表评论
-    //http://172.17.8.100/health/user/sickCircle/verify/v1/publishComment
-    @FormUrlEncoded
-    @POST("health/user/sickCircle/verify/v1/publishComment")
-    Observable<PublishBean> getpublish(@Header("userId") Integer userId, @Header("sessionId") String sessionId, @Field("sickCircleId") Integer sickCircleId, @Field("content") String content);
+   Observable<VideoCommentList> commentList(@Query("videoId") Integer id);
 
+    @POST("user/v1/sendOutEmailCode")
+
+    Observable<YanZhengMaBean> yanZhengMa(@Query("email") String mail);
+
+    @POST("user/v1/register")
+    Observable<RegisterBean> register(@QueryMap Map<String, String> map);
+
+    @POST("user/v1/login")
+    Observable<LogainBean> logainBean(@QueryMap Map<String, String> map);
 }

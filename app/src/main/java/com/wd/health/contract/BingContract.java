@@ -2,7 +2,6 @@ package com.wd.health.contract;
 
 import com.wd.health.base.IBaseView;
 import com.wd.health.model.bean.DepartmentsBean;
-import com.wd.health.model.bean.PublishBean;
 import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
@@ -34,9 +33,6 @@ public interface BingContract {
 
         void SickInfoSuccess(SickCircleInfoBean sickCircleInfoBean);
         void SickInfoFailure(Throwable e);
-
-        void PublishSuccess(PublishBean publishBean);
-        void PublishFailure(Throwable e);
     }
 
     interface IModel{
@@ -45,34 +41,28 @@ public interface BingContract {
             void DeparSuccess(DepartmentsBean departmentsBean);
             void DeparFailure(Throwable e);
         }
-        void Sick(Map<String,String> map,SModelCall sModelCall );
+        void Sick(Map<String, String> map, SModelCall sModelCall);
         interface SModelCall{
             void SickSuccess(SickCircleListBean sickCircleListBean);
             void SickFailure(Throwable e);
         }
-        void Circle(String keyWord,CModelCall cModelCall);
+        void Circle(String keyWord, CModelCall cModelCall);
         interface CModelCall{
             void CircleSuccess(SearchSickCircleBean searchSickCircleBean);
             void CircleFailure(Throwable e);
         }
 
-        void SickInfo(Integer sickCircleId,FModelCall fModelCall);
+        void SickInfo(Integer sickCircleId, FModelCall fModelCall);
         interface FModelCall{
             void SickInfoSuccess(SickCircleInfoBean sickCircleInfoBean);
             void SickInfoFailure(Throwable e);
-        }
-        void Publish(Integer userId,String sessionId,Integer sickCircleId ,String content, PModelCall pModelCall);
-        interface PModelCall{
-            void PublishSuccess(PublishBean publishBean);
-            void PublishFailure(Throwable e);
         }
     }
 
     interface Presenter{
         void Depar();
-        void Sick(Map<String,String> map);
+        void Sick(Map<String, String> map);
         void Circle(String keyWord);
         void SickInfo(Integer sickCircleId);
-        void Publish(Integer userId,String sessionId,Integer sickCircleId ,String content);
     }
 }

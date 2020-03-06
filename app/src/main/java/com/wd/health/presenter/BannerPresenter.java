@@ -1,25 +1,10 @@
 package com.wd.health.presenter;
 
-//import com.wd.health.app.Constant;
-//import com.wd.health.base.BasePresenter;
-//import com.wd.health.contract.BannerContract;
-//import com.wd.health.contract.IBannerContract;
-//import com.wd.health.model.BannerModel;
-//import com.wd.health.model.bean.homeBean.BannerBean;
-//import com.wd.health.model.bean.homeBean.HomeSuoSouBean;
-//import com.wd.health.model.bean.homeBean.JKZXBean;
-//import com.wd.health.model.bean.homeBean.JKZiXunListBean;
-
 import com.wd.health.app.Constant;
 import com.wd.health.base.BasePresenter;
-import com.wd.health.contract.IBannerContract;
+import com.wd.health.contract.BannerContract;
 import com.wd.health.model.BannerModel;
-import com.wd.health.model.bean.homeBean.BannerBean;
-import com.wd.health.model.bean.homeBean.HomeSuoSouBean;
-import com.wd.health.model.bean.homeBean.JKZXBean;
-import com.wd.health.model.bean.homeBean.JKZiXunListBean;
-
-
+import com.wd.health.model.bean.BannerBean;
 
 /**
  * @ProjectName: WDHealth
@@ -33,7 +18,7 @@ import com.wd.health.model.bean.homeBean.JKZiXunListBean;
  * @UpdateRemark: 更新说明
  * @Version: 1.0
  */
-public class BannerPresenter extends BasePresenter<IBannerContract.IView> implements IBannerContract.IPresenter {
+public class BannerPresenter extends BasePresenter<BannerContract.IView> implements BannerContract.IPresenter {
 
     private BannerModel bannerModel;
 
@@ -44,101 +29,24 @@ public class BannerPresenter extends BasePresenter<IBannerContract.IView> implem
 
     @Override
     public void banner() {
-        bannerModel.banner(new IBannerContract.IModel.IModelBack() {
-            @Override
-            public void onBannerSuccess(BannerBean bannerBean) {
-                if (isViewAttached()) {
-                    if (bannerBean != null && Constant.SUCCESS_CODE.equals(bannerBean.getStatus())) {
-                        getView().onBannerSuccess(bannerBean);
-                    } else {
-                        getView().onBannerFailure(new Exception("服务器异常"));
-                    }
-                }
-            }
+      bannerModel.banner(new BannerContract.IModel.IModelBack() {
+          @Override
+          public void onBannerSuccess(BannerBean bannerBean) {
+              if (isViewAttached()) {
+                  if (bannerBean != null && Constant.SUCCESS_CODE.equals(bannerBean.getStatus())) {
+                      getView().onBannerSuccess(bannerBean);
+                  } else {
+                      getView().onBannerFailure(new Exception("服务器异常"));
+                  }
+              }
+          }
 
-            @Override
-            public void onBannerFailure(Throwable e) {
-                if (isViewAttached()) {
-                    getView().onBannerFailure(e);
-                }
-            }
-        });
+          @Override
+          public void onBannerFailure(Throwable e) {
+              if (isViewAttached()) {
+                  getView().onBannerFailure(e);
+              }
+          }
+      });
     }
-
-    @Override
-    public void zixuna() {
-        //契约类里面的正确错误回调
-        bannerModel.zixun(new IBannerContract.IModel.IZXModelBack() {
-            @Override
-            public void onZXSuccess(JKZXBean jkzxBean) {
-                if (isViewAttached()){  //不知道从何而来
-                    if (jkzxBean != null && Constant.SUCCESS_CODE.equals(jkzxBean.getStatus())) {
-                        getView().onJKZiXunSuccess(jkzxBean);
-                    } else {
-                        getView().onJKZiXunFailure(new Exception("服务器异常"));
-                    }
-                }
-            }
-
-            @Override
-            public void onZXFailure(Throwable e) {
-
-            }
-        });
-
-    }
-
-    @Override
-    public void zixunList(int plateId, int page, int count) {
-        //契约类里面的正确错误回调
-        bannerModel.zixunList(plateId,page,count, new IBannerContract.IModel.IZXListModelBack() {
-            @Override
-            public void onZXListSuccess(JKZiXunListBean jkZiXunListBean) {
-                if (isViewAttached()){  //不知道从何而来
-                    if (jkZiXunListBean != null && Constant.SUCCESS_CODE.equals(jkZiXunListBean.getStatus())) {
-                        getView().onZiXunSuccess(jkZiXunListBean);
-                    } else {
-                        getView().onZiXunFailure(new Exception("服务器异常"));
-                    }
-                }
-            }
-
-            @Override
-            public void onZXListFailure(Throwable e) {
-
-            }
-        });
-    }
-
-
-
-
-    /*
-           搜索
-            */
-    @Override
-    public void homeSouSuo(String keyWord) {
-//        bannerModel.homeSouSuo(keyWord,new IBannerContract.IModel.ISousuoModelBack());
-
-        bannerModel.homeSouSuo(keyWord, new IBannerContract.IModel.ISousuoModelBack() {
-            @Override
-            public void onSouSuoSuccess(HomeSuoSouBean homeSuoSouBean) {
-                if (isViewAttached()){  //不知道从何而来
-                    if (homeSuoSouBean != null && Constant.SUCCESS_CODE.equals(homeSuoSouBean.getStatus())) {
-                        getView().onSousuoSuccess(homeSuoSouBean);
-                    } else {
-                        getView().onSousuoFailure(new Exception("服务器异常"));
-                    }
-                }
-            }
-
-            @Override
-            public void onSuosouFailure(Throwable e) {
-
-            }
-        });
-    }
-
-
-
 }

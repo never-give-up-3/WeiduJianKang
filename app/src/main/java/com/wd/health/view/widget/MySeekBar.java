@@ -50,8 +50,8 @@ public class MySeekBar extends SeekBar {
      * @return 控件的宽度
      */
     private int getViewWidth(View v) {
-        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int w = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        int h = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         v.measure(w, h);
         return v.getMeasuredWidth();
     }
@@ -63,8 +63,8 @@ public class MySeekBar extends SeekBar {
      * @return 控件的高度
      */
     private int getViewHeight(View v) {
-        int w = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
-        int h = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED);
+        int w = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
+        int h = MeasureSpec.makeMeasureSpec(0, MeasureSpec.UNSPECIFIED);
         v.measure(w, h);
         return v.getMeasuredHeight();
     }
