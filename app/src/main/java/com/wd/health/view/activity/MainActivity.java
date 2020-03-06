@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.wd.health.R;
 import com.wd.health.adapter.MyAdApter;
+import com.wd.health.app.App;
+import com.wd.health.utils.ToastUtils;
 import com.wd.health.view.fragment.Center_fragment;
 import com.wd.health.view.fragment.LeftFragment;
 import com.wd.health.view.fragment.Right_fragment;

@@ -194,6 +194,7 @@ public class CurtainView extends RelativeLayout implements View.OnTouchListener 
     public void onRopeClick(){
         if(isOpen){
             CurtainView.this.startMoveAnim(0, curtainHeigh, upDuration);
+
         }else{
             CurtainView.this.startMoveAnim(curtainHeigh,-curtainHeigh, downDuration);
         }

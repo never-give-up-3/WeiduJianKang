@@ -1,31 +1,49 @@
 package com.wd.health.view.fragment;
 
+import android.annotation.TargetApi;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
+import android.widget.SeekBar;
 import android.widget.VideoView;
 
 import com.dingmouren.layoutmanagergroup.viewpager.OnViewPagerListener;
 import com.dingmouren.layoutmanagergroup.viewpager.ViewPagerLayoutManager;
 import com.wd.health.R;
+import com.wd.health.app.App;
 import com.wd.health.base.BaseFragment;
 import com.wd.health.contract.Video_CategoryListContract;
 import com.wd.health.model.bean.ChaXunShiPin_DataBean;
 import com.wd.health.model.bean.ChaXunShiPin_ResutBean;
+import com.wd.health.model.bean.CollectBean;
+import com.wd.health.model.bean.Commentbean;
+import com.wd.health.model.bean.LogainBean;
+import com.wd.health.model.bean.LogainBeanResultBean;
+import com.wd.health.model.bean.VideoCommentList;
 import com.wd.health.model.bean.Video_TablayoutDataBean;
 import com.wd.health.model.bean.Video_TablayoutResultBean;
+import com.wd.health.model.bean.Videobuybean;
 import com.wd.health.presenter.Video_CategoryListPresent;
 import com.wd.health.utils.CurtainView;
+import com.wd.health.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,15 +65,14 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
     @BindView(R.id.curtainview)
     CurtainView curtainview;
 
-
     private RecyclerView mRecyclerView;
     private MyAdapter mAdapter;
     private ViewPagerLayoutManager mLayoutManager;
     public ArrayList<String> list = new ArrayList();
-
+    public ArrayList<String> imaglist = new ArrayList();
     public ArrayList<RadioButton> rbtlist = new ArrayList();
-
-
+    int querenzhi;
+    int flag = 0;
     private String shearUrl;
     private ChaXunShiPin_DataBean bean;
     private List<ChaXunShiPin_DataBean> result;
@@ -67,6 +84,28 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
     private RadioButton rbt_five;
     private RadioButton rbt_six;
     private ImageView img_curtain_rope;
+    private View itemView;
+    private VideoView videoView;
+    //private SeekBar seekBar;
+    private SeekBar seekBar;
+    //关于进度条每次更新需要更新ui
+    private Handler handler = new Handler();
+    private Runnable runnable = new Runnable() {
+
+        public void run() {
+            if (videoView.isPlaying()) {
+                int current = videoView.getCurrentPosition();
+                seekBar.setProgress(current);
+                Log.d("hao0", current + "");
+
+            }
+
+            handler.postDelayed(runnable, 500);
+        }
+    };
+    private ImageView collect_button;
+    private int id;
+
 
     @Override
     protected Video_CategoryListPresent providePresenter() {
@@ -78,10 +117,23 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
         return R.layout.right;
     }
 
+    //点击上面的视频条目的成功的方法
     @Override
     public void succeed(Video_TablayoutResultBean video_tablayoutResultBean) {
         List<Video_TablayoutDataBean> result = video_tablayoutResultBean.getResult();
+        int size = result.size();
+        Log.d("sizesss", size + "");
 
+        for (int j = 0; j < result.size(); j++) {
+            Video_TablayoutDataBean video_tablayoutDataBean = result.get(j);
+            HashMap<String, Object> map = new HashMap<>();
+            int ids = video_tablayoutDataBean.getId();
+            map.put("page", 1);
+            map.put("count", 10);
+            map.put("categoryId", ids);
+            mPresenter.chaXun(map);
+            querenzhi = 1;
+        }
         for (int i = 0; i < result.size(); i++) {
             Video_TablayoutDataBean video_tablayoutDataBean = result.get(i);
             String name = video_tablayoutDataBean.getName();
@@ -99,66 +151,112 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
                     map.put("categoryId", id);
                     mPresenter.chaXun(map);
                     Log.d("id是", id + "");
+                    querenzhi = 2;
                 }
             });
-
         }
     }
-
     @Override
     public void failure(Throwable throwable) {
 
     }
 
+    //查询视频成功的方法
     @Override
     public void onChaXunShiPinSuccess(ChaXunShiPin_ResutBean chaXunShiPin_resutBean) {
         Log.d("是否成功", chaXunShiPin_resutBean.getMessage());
         Log.d("1111111111111", "22222222222222");
-        result = chaXunShiPin_resutBean.getResult();
-        for (int i = 0; i < result.size(); i++) {
-            bean = result.get(i);
-            shearUrl = bean.getShearUrl();
-            String originalUrl = bean.getOriginalUrl();
-            list.add(shearUrl);
-            list.add(originalUrl);
+        List<ChaXunShiPin_DataBean> result = chaXunShiPin_resutBean.getResult();
+        
+        if (querenzhi == 1) {
+            this.result = chaXunShiPin_resutBean.getResult();
+            for (int i = 0; i < this.result.size(); i++) {
+                bean = this.result.get(i);
+                shearUrl = bean.getShearUrl();
+                String abstracts = bean.getAbstracts();
+                int whetherBuy = bean.getWhetherBuy();
+                Log.d("789456", whetherBuy + "");
+                int whetherCollection = bean.getWhetherCollection();
+                int id = bean.getId();
+                Log.d("44444",id+"");
+                //SharedPreferences config= getContext().getSharedPreferences("config", Context.MODE_PRIVATE);
+                Log.d("whe", whetherCollection + "");
+                Log.d("whes", bean.getId() + "");
+                //list.add(shearUrl);
+                list.add(shearUrl);
+
+
+            }
+            Log.d("456", list.size() + "");
+
+            ArrayList<String> list = this.list;
+            myAdapter.setSlist(this.list);
+            myAdapter.notifyDataSetChanged();
+            mrecycler.setAdapter(mAdapter);
+
+
+        } else if (querenzhi == 2) {
+            this.result = chaXunShiPin_resutBean.getResult();
+            for (int i = 0; i < this.result.size(); i++) {
+                bean = this.result.get(i);
+                shearUrl = bean.getOriginalUrl();
+                Log.d("5555555", shearUrl);
+                id = bean.getId();
+
+                //String originalUrl = bean.getOriginalUrl();
+                //list.add(shearUrl);
+                list.add(shearUrl);
+            }
+            
+            Log.d("456", list.size() + "");
+            ArrayList<String> list = this.list;
+            myAdapter.setSlist(this.list);
+            myAdapter.notifyDataSetChanged();
+            mrecycler.setAdapter(mAdapter);
+
         }
-        Log.d("456", list.size() + "");
-
-        ArrayList<String> list = this.list;
-        myAdapter.setSlist(this.list);
-        myAdapter.notifyDataSetChanged();
-        mrecycler.setAdapter(mAdapter);
     }
-
-
     @Override
     protected void initData() {
         super.initData();
+        EventBus.getDefault().register(this);
 
-
-     /*   HashMap<String, Object> map = new HashMap<>();
-        map.put("page",1);
-        map.put("count",5);
-        map.put("categoryId",1);
-        mPresenter.chaXun(map);
-       */
         mPresenter.categoryListShow();
-
         initListener();
-
         rbtlist.add(rbt_one);
         rbtlist.add(rbt_two);
         rbtlist.add(rbt_three);
         rbtlist.add(rbt_four);
         rbtlist.add(rbt_five);
         rbtlist.add(rbt_six);
+        //点击进行视频收藏
+    }
+   @Subscribe
+    public void jieshou(LogainBean logainBean){
+        //Log.d("789456",message);
+        String message= logainBean.getMessage();
+        logainBean.getResult();
+        Log.d("15951",message);
+        if (message.equals("登录成功")){
+            LogainBeanResultBean result = logainBean.getResult();
+            String sessionId = result.getSessionId();
+            HashMap<String, Object> hashMap = new HashMap<>();
+        if (!TextUtils.isEmpty(sessionId) && sessionId.length()>=4&&message.equals("登录成功")){
+            String substring = sessionId.substring(11, 16);
+            Log.d("subs",substring);
+            Log.d("qiege",substring);
+
+            Log.d("11111",sessionId);
+            hashMap.put("videoId",2);
+            mPresenter.colleCtion(Integer.valueOf(substring),sessionId,hashMap);
+        }
+      }
 
     }
 
     @Override
     protected void initView() {
         super.initView();
-
         rbt_one = (RadioButton) curtainview.findViewById(R.id.rbt_one);
         rbt_two = (RadioButton) curtainview.findViewById(R.id.rbt_two);
         rbt_three = (RadioButton) curtainview.findViewById(R.id.rbt_three);
@@ -173,9 +271,10 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
         mrecycler.setLayoutManager(mLayoutManager);
     }
 
+
+    //监听位置
     private void initListener() {
         mLayoutManager.setOnViewPagerListener(new OnViewPagerListener() {
-
             @Override
             public void onInitComplete() {
                 Log.e(TAG, "onInitComplete");
@@ -199,19 +298,34 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
                 Log.e(TAG, "选中位置:" + position + "  是否是滑动到底部:" + isBottom);
                 playVideo(0);
             }
-
-
         });
+
     }
 
+    //去执行视频播放  暂停  播放的方法
     private void playVideo(int position) {
-        View itemView = mrecycler.getChildAt(0);
-        final VideoView videoView = itemView.findViewById(R.id.video_view);
-        final ImageView imgPlay = itemView.findViewById(R.id.img_play);
-        final ImageView imgThumb = itemView.findViewById(R.id.img_thumb);
-        final RelativeLayout rootView = itemView.findViewById(R.id.root_view);
+        View itemViews = mrecycler.getChildAt(0);
+        videoView = (VideoView) itemViews.findViewById(R.id.video_view);
+        final ImageView imgPlay = itemViews.findViewById(R.id.img_play);
+        final ImageView imgThumb = itemViews.findViewById(R.id.img_thumb);
+        final RelativeLayout rootView = itemViews.findViewById(R.id.root_view);
+        //seekBar = (SeekBar) itemViews.findViewById(R.id.seekBar);
+        seekBar= (SeekBar)itemViews.findViewById(R.id.seekBar);
+        collect_button = (ImageView) itemViews.findViewById(R.id.collect_button);
+
+      /*  seekBar.setOnSeekBarChangeListener(onSeekBarChangeListener);*/
         final MediaPlayer[] mediaPlayer = new MediaPlayer[1];
+        //视频开始播放
         videoView.start();
+
+
+
+      /*  if (videoView.isPlaying()){
+            handler.postDelayed(runnable, 0);
+            seekBar.setMax(videoView.getDuration());
+        }else {
+            ToastUtils.showShort(App.getAppContext(),"视频不在播放中");
+        }*/
         videoView.setOnInfoListener(new MediaPlayer.OnInfoListener() {
             @Override
             public boolean onInfo(MediaPlayer mp, int what, int extra) {
@@ -221,14 +335,14 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
                 return false;
             }
         });
+
         videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
 
             }
         });
-
-
+        //点击视频的点击播放的按钮
         imgPlay.setOnClickListener(new View.OnClickListener() {
             boolean isPlaying = true;
 
@@ -241,40 +355,118 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
                 } else {
                     imgPlay.animate().alpha(0f).start();
                     videoView.start();
+                    int duration = videoView.getDuration();
+                    Log.d("mimi", duration + "");
+                    int max = seekBar.getMax();
+                    Log.d("max", max + "");
+                    //开始播放时去发送
+                    handler.postDelayed(runnable, 0);
+                    seekBar.setMax(videoView.getDuration());
+
                     isPlaying = true;
                 }
             }
         });
-    }
 
-    private void releaseVideo(int index) {
-        View itemView = mrecycler.getChildAt(index);
-        final VideoView videoView = itemView.findViewById(R.id.video_view);
-        final ImageView imgThumb = itemView.findViewById(R.id.img_thumb);
-        final ImageView imgPlay = itemView.findViewById(R.id.img_play);
-        videoView.stopPlayback();
-        imgThumb.animate().alpha(1).start();
-        imgPlay.animate().alpha(0f).start();
-    }
 
-    //查询视频列表的播放视频
-  /*  @Override
-    public void onChaXunShiPinSuccess(ChaXunShiPin_ResutBean chaXunShiPin_resutBean) {
-        if (chaXunShiPin_resutBean.getMessage().equals("0000")){
-            Log.d("是否成功",chaXunShiPin_resutBean.getMessage());
-            Log.d("1111111111111","22222222222222");
-            result = chaXunShiPin_resutBean.getResult();
-            for (int i=0;i<result.size();i++){
-                bean = result.get(i);
-                shearUrl = bean.getShearUrl();
-                list.add(shearUrl);
+       /*     handler.postDelayed(runnable, 0);
+            seekBar.setMax(videoView.getDuration());*/
+        //播放已经成功的方法
+        videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                ToastUtils.showLong(App.getAppContext(), "播放已经完成");
             }
-            Log.d("456",list.size()+"");
-            MyAdapter myAdapter = new MyAdapter();
-            myAdapter.setSlist(list);
+        });
+
+
+        ImageView collect_buttons = (ImageView) itemViews.findViewById(R.id.collect_button);
+        collect_buttons.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                switch (flag) {
+
+                    case 0:
+
+                        v.setActivated(false);
+
+                        flag = 1;
+
+                        break;
+
+                    case 1:
+
+                        v.setActivated(true);
+
+                        flag = 0;
+                        //mPresenter.colleCtion(id );
+
+                        break;
+
+                }
+
+            }
+
+        });
+
+
+    }
+
+
+    private SeekBar.OnSeekBarChangeListener onSeekBarChangeListener = new SeekBar.OnSeekBarChangeListener() {
+        // 当进度条停止修改的时候触发
+        //final VideoView videoView = itemView.findViewById(R.id.video_view);
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            // 取得当前进度条的刻度
+            int progress = seekBar.getProgress();
+            if (videoView.isPlaying()) {
+                // 设置当前播放的位置
+                videoView.seekTo(progress);
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+
+        }
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress,
+                                      boolean fromUser) {
+
+        }
+    };
+
+    //每次滑动视频需要执行的方法
+    @TargetApi(Build.VERSION_CODES.O)
+    private void releaseVideo(int index) {
+        itemView = mrecycler.getChildAt(index);
+        if (itemView != null) {
+            final VideoView videoViews = itemView.findViewById(R.id.video_view);
+            final ImageView imgThumb = itemView.findViewById(R.id.img_thumb);
+            final ImageView imgPlay = (ImageView) itemView.findViewById(R.id.img_play);
+            //videoViews.pause();
+            videoViews.stopPlayback();
+
+            //seekBar.setMax(0);
+            imgThumb.animate().alpha(1).start();
+            imgPlay.animate().alpha(5f).start();
+            //imgPlay.setBackgroundColor(Color.RED);
         }
 
 
+    }
+
+    //点击了home键需要暂停
+   /* @Override
+    public void onPause() {
+        super.onPause();
+        View itemViews = mrecycler.getChildAt(0);
+        ImageView imgPlay = (ImageView) itemViews.findViewById(R.id.img_play);
+        videoView.pause();
+        imgPlay.animate().alpha(1f).start();
     }*/
 
     @Override
@@ -283,11 +475,51 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
     }
 
 
+    //视频收藏的成功方法
+    @Override
+    public void collectionSucceed(CollectBean collectBean) {
+        Log.d("shipin", collectBean.getMessage());
+    }
+
+    @Override
+    public void collectionFailure(Throwable throwable) {
+
+    }
+
+    @Override
+    public void commentSucceed(Commentbean comment) {
+
+    }
+
+    @Override
+    public void commentFailure(Throwable throwable) {
+
+    }
+
+    @Override
+    public void videobuySucceed(Videobuybean videobuybean) {
+
+    }
+
+    @Override
+    public void videobuyFailure(Throwable throwable) {
+
+    }
+
+    @Override
+    public void commentListSucceed(VideoCommentList videoCommentList) {
+
+    }
+
+    @Override
+    public void commentListFailure(Throwable throwable) {
+
+    }
+
     public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder> {
         //private int[] imgs = {R.mipmap.img_video_1,R.mipmap.img_video_2};
         //private int[] videos = {R.raw.video_1,R.raw.video_2};
         public ArrayList<String> slist = new ArrayList<>();
-
 
         public void setSlist(ArrayList<String> slist) {
             this.slist = slist;
@@ -295,7 +527,6 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
 
         public MyAdapter() {
         }
-
 
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -311,16 +542,15 @@ public class Right_fragment extends BaseFragment<Video_CategoryListPresent> impl
             Log.d("123", dlist.size() + "");
             Log.d("489", slist.size() + "");
             if (dlist.size() != 0) {
+                //holder.img_thumb.setImageBitmap();
                 holder.videoView.setVideoURI(Uri.parse(dlist.get(position)));
                 //holder.videoView.setVideoURI(Uri.parse(dlist.get(position % 3)));
             }
-
-
         }
 
         @Override
         public int getItemCount() {
-            return 20;
+            return list.size();
         }
 
         public class ViewHolder extends RecyclerView.ViewHolder {

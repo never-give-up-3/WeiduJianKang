@@ -5,7 +5,11 @@ import com.wd.health.base.BasePresenter;
 import com.wd.health.contract.Video_CategoryListContract;
 import com.wd.health.model.Video_CategoryListModel;
 import com.wd.health.model.bean.ChaXunShiPin_ResutBean;
+import com.wd.health.model.bean.CollectBean;
+import com.wd.health.model.bean.Commentbean;
+import com.wd.health.model.bean.VideoCommentList;
 import com.wd.health.model.bean.Video_TablayoutResultBean;
+import com.wd.health.model.bean.Videobuybean;
 
 import java.util.Map;
 
@@ -65,4 +69,102 @@ public class Video_CategoryListPresent extends BasePresenter<Video_CategoryListC
             }
         });
     }
+    //收藏视频
+    @Override
+    public void colleCtion(Integer id,String session,Map<String,Object> map) {
+        video_categoryListModel.colleCtion(id,session,map, new Video_CategoryListContract.Video_CategoryModel.CollectioncallBack() {
+            @Override
+            public void collectionSucceed(CollectBean collectBean) {
+                if (isViewAttached()) {
+                    if (collectBean != null && Constant.SUCCESS_CODE.equals(collectBean.getMessage())) {
+                        getView().collectionSucceed(collectBean);
+                    } else {
+                        getView().failure(new Exception("服务器异常"));
+                    }
+                }
+            }
+
+            @Override
+            public void collectionFailure(Throwable throwable) {
+                if (isViewAttached()) {
+                    getView().failure(throwable);
+                }
+            }
+        });
+    }
+   //视频的弹幕
+    @Override
+    public void comment(Map<String, Object> map) {
+        video_categoryListModel.comment(map, new Video_CategoryListContract.Video_CategoryModel.Comments() {
+            @Override
+            public void commentSucceed(Commentbean comment) {
+                if (isViewAttached()) {
+                    if (comment != null && Constant.SUCCESS_CODE.equals(comment.getMessage())) {
+                       getView().commentSucceed(comment);
+                    } else {
+                        getView().failure(new Exception("服务器异常"));
+                    }
+                }
+            }
+
+            @Override
+            public void commentFailure(Throwable throwable) {
+                if (isViewAttached()) {
+                    getView().failure(throwable);
+                }
+            }
+        });
+    }
+   //视频的购买
+    @Override
+    public void vidioBuy(Map<String, Object> map) {
+      video_categoryListModel.vidioBuy(map, new Video_CategoryListContract.Video_CategoryModel.Vidiobuy() {
+          @Override
+          public void videobuySucceed(Videobuybean videobuybean) {
+              if (isViewAttached()) {
+                  if (videobuybean != null && Constant.SUCCESS_CODE.equals(videobuybean.getMessage())) {
+                      getView().videobuySucceed(videobuybean);
+                  } else {
+                      getView().failure(new Exception("服务器异常"));
+                  }
+              }
+          }
+
+          @Override
+          public void videobuyFailure(Throwable throwable) {
+              if (isViewAttached()) {
+                  getView().failure(throwable);
+              }
+          }
+      });
+
+
+    }
+
+
+    //查询视频的评论列表
+    @Override
+    public void commentList(Integer id) {
+        video_categoryListModel.commentList(id, new Video_CategoryListContract.Video_CategoryModel.CommentList() {
+            @Override
+            public void commentListSucceed(VideoCommentList videoCommentList) {
+                if (isViewAttached()) {
+                    if (videoCommentList != null && Constant.SUCCESS_CODE.equals(videoCommentList.getMessage())) {
+                        getView().commentListSucceed(videoCommentList);
+                    } else {
+                        getView().failure(new Exception("服务器异常"));
+                    }
+                }
+            }
+
+            @Override
+            public void commentListFailure(Throwable throwable) {
+                if (isViewAttached()) {
+                    getView().failure(throwable);
+                }
+            }
+        });
+    }
+
+
 }

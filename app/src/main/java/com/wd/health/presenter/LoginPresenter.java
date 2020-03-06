@@ -2,9 +2,11 @@ package com.wd.health.presenter;
 
 import com.wd.health.app.Constant;
 import com.wd.health.base.BasePresenter;
-import com.wd.health.contract.ILoginContract;
-import com.wd.health.model.LoginModel;
-import com.wd.health.model.bean.LoginBean;
+import com.wd.health.contract.RegisterContracts;
+import com.wd.health.model.RegisterModel;
+import com.wd.health.model.bean.LogainBean;
+import com.wd.health.model.bean.RegisterBean;
+import com.wd.health.model.bean.YanZhengMaBean;
 
 import java.util.Map;
 
@@ -27,43 +29,83 @@ import java.util.Map;
  * 3、成功失败处，先调用 {@link #isViewAttached()} 判断是否挂载、然后才可以使用{@link #getView()}方法获取view，进行数据回调
  */
 
-public class LoginPresenter extends BasePresenter<ILoginContract.IView> implements ILoginContract.IPresenter  {
+public class LoginPresenter extends BasePresenter<RegisterContracts.IView> implements RegisterContracts.IPresenter  {
 
-    private LoginModel mLoginModel;
+    private RegisterModel registerModel;
 
     @Override
-    public void login(Map<String, Object> map) {
-        //2、调用model中的的方法，设置回调监听
-        mLoginModel.login(map, new ILoginContract.IModel.IModelCallback() {
+    protected void initModel() {
+        registerModel = new RegisterModel();
+    }
+
+
+    @Override
+    public void yanzheng(String email) {
+        registerModel.yanzheng(email, new RegisterContracts.IModel.IModelBack() {
             @Override
-            public void onLoginSuccess(LoginBean loginBean) {
-                //3、必须先判断是否挂载、然后才可以使用getView方法
+            public void onRegisterSuccess(YanZhengMaBean bannerBean) {
                 if (isViewAttached()) {
-                    if (loginBean != null && Constant.SUCCESS_CODE.equals(loginBean.getStatus())) {
-                        getView().onLoginSuccess(loginBean);
+                    if (bannerBean != null && Constant.SUCCESS_CODE.equals(bannerBean.getStatus())) {
+                        getView().onRegisterSuccess(bannerBean);
                     } else {
-                        getView().onLoginFailure(new Exception("服务器异常"));
+                        getView().onBannerFailure(new Exception("服务器异常"));
                     }
                 }
             }
 
             @Override
-            public void onLoginFailure(Throwable e) {
-                //4、失败回调
+            public void onBannerFailure(Throwable e) {
+
+            }
+
+
+        });
+    }
+
+    @Override
+    public void zhuce(Map<String, String> map) {
+        registerModel.zhuce(map, new RegisterContracts.IModel.toZhuce() {
+            @Override
+            public void onZhuce(RegisterBean registerBean) {
                 if (isViewAttached()) {
-                    getView().onLoginFailure(e);
+                    if (registerBean != null && Constant.SUCCESS_CODE.equals(registerBean.getStatus())) {
+                        getView().onZhuce(registerBean);
+                    } else {
+                        getView().onBannerFailure(new Exception("服务器异常"));
+                    }
                 }
+            }
+
+            @Override
+            public void onFanial(Throwable e) {
+
             }
         });
     }
 
-    /**
-     * 1、在这个方法中初始化model
-     */
     @Override
-    protected void initModel() {
-        mLoginModel = new LoginModel();
+    public void logain(Map<String, String> map) {
+        registerModel.logain(map, new RegisterContracts.IModel.toLogain() {
+            @Override
+            public void onZhuce(LogainBean logainBean) {
+                if (isViewAttached()) {
+                    if (logainBean != null && Constant.SUCCESS_CODE.equals(logainBean.getStatus())) {
+                        getView().onLogain(logainBean);
+                    } else {
+                        getView().onBannerFailure(new Exception("服务器异常"));
+                    }
+                }
+            }
+
+            @Override
+            public void onFanial(Throwable e) {
+
+            }
+        });
     }
+
+
+
 
 
 }
