@@ -2,6 +2,7 @@ package com.wd.health.contract;
 
 import com.wd.health.base.IBaseView;
 import com.wd.health.model.bean.DepartmentsBean;
+import com.wd.health.model.bean.PublishBean;
 import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
@@ -33,6 +34,9 @@ public interface BingContract {
 
         void SickInfoSuccess(SickCircleInfoBean sickCircleInfoBean);
         void SickInfoFailure(Throwable e);
+
+        void PublishSuccess(PublishBean publishBean);
+        void PublishFailure(Throwable e);
     }
 
     interface IModel{
@@ -57,6 +61,11 @@ public interface BingContract {
             void SickInfoSuccess(SickCircleInfoBean sickCircleInfoBean);
             void SickInfoFailure(Throwable e);
         }
+        void Publish(Integer userId,String sessionId,Integer sickCircleId ,String content, PModelCall pModelCall);
+        interface PModelCall{
+            void PublishSuccess(PublishBean publishBean);
+            void PublishFailure(Throwable e);
+        }
     }
 
     interface Presenter{
@@ -64,5 +73,6 @@ public interface BingContract {
         void Sick(Map<String,String> map);
         void Circle(String keyWord);
         void SickInfo(Integer sickCircleId);
+        void Publish(Integer userId,String sessionId,Integer sickCircleId ,String content);
     }
 }

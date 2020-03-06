@@ -89,7 +89,8 @@ dependencies {
     implementation 'com.bigkoo:ConvenientBanner:2.1.4'
 
 
-
+//xbanner依赖
+    implementation 'com.xhb:xbanner:1.2.2'
 
 
 
