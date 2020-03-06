@@ -89,7 +89,8 @@ dependencies {
     implementation 'com.bigkoo:ConvenientBanner:2.1.4'
 
 
-
+//xbanner依赖
+    implementation 'com.xhb:xbanner:1.2.2'
 
 
 
@@ -116,8 +117,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
 
 
-    //xbanner依赖
-    implementation 'com.xhb:xbanner:1.2.2'
+
 
 
 //glide依赖

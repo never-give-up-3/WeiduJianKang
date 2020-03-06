@@ -10,6 +10,9 @@ import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
 import com.wd.health.model.bean.homeBean.BannerBean;
+import com.wd.health.model.bean.homeBean.HomeSuoSouBean;
+import com.wd.health.model.bean.homeBean.JKZXBean;
+import com.wd.health.model.bean.homeBean.JKZiXunListBean;
 
 
 import java.util.Map;
@@ -34,7 +37,7 @@ import retrofit2.http.QueryMap;
  */
 public interface IApi {
 
-   @FormUrlEncoded
+    @FormUrlEncoded
     @POST("user/v1/login")
     Observable<LoginBean> login(@QueryMap Map<String, Object> map);
 
@@ -42,13 +45,32 @@ public interface IApi {
     @GET("share/v1/bannersShow")
     Observable<BannerBean> banner();
 
+    //首页搜索
+    //http://172.17.8.100/health/share/v1/homePageSearch
+    @GET("share/v1/homePageSearch")
+    Observable<HomeSuoSouBean> homePageSearch(@Query("keyWord") String keyWord);
+
+    //健康咨询
+//    http://172.17.8.100/health/share/information/v1/findInformationPlateList
+    @GET("share/information/v1/findInformationPlateList")
+    Observable<JKZXBean> findInformationPlateList();
+
+    //健康咨询列表
+//    http://172.17.8.100/health/share/information/v1/findInformationList
+    @GET("share/information/v1/findInformationList")
+    Observable<JKZiXunListBean> findInformationList(@Query("plateId") int plateId, @Query("page") int page, @Query("count") int count);
+
+    //复制
+    @GET("share/information/v1/findInformationList")
+    Observable<JKZiXunListBean> findInformationList2(@Query("plateId") int plateId, @Query("page") int page, @Query("count") int count);
+
 
     @GET("user/video/v1/findVideoCategoryList")
     Observable<Video_TablayoutResultBean> tablyList();
 
     @GET("user/video/v1/findVideoVoList")
-    @Headers({"userId:91145","sessionId:1581151729091145"})
-    Observable<ChaXunShiPin_ResutBean> chaXun_Vidio(@QueryMap Map<String,Object> map);
+    @Headers({"userId:91145", "sessionId:1581151729091145"})
+    Observable<ChaXunShiPin_ResutBean> chaXun_Vidio(@QueryMap Map<String, Object> map);
 
     //科室列表
     @GET("share/knowledgeBase/v1/findDepartment")
@@ -56,7 +78,7 @@ public interface IApi {
 
     //病友圈列表
     @GET("user/sickCircle/v1/findSickCircleList")
-    Observable<SickCircleListBean> sick(@QueryMap Map<String,String> map);
+    Observable<SickCircleListBean> sick(@QueryMap Map<String, String> map);
 
     //关键词查询病友圈
     @GET("user/sickCircle/v1/searchSickCircle")
@@ -66,10 +88,11 @@ public interface IApi {
     //http://172.17.8.100/health/user/sickCircle/v1/findSickCircleInfo?sickCircleId=4
     @GET("health/user/sickCircle/v1/findSickCircleInfo")
     Observable<SickCircleInfoBean> getSickCircleInfo(@Query("sickCircleId") Integer sickCircleId);
- //发表评论
- //http://172.17.8.100/health/user/sickCircle/verify/v1/publishComment
- @FormUrlEncoded
- @POST("health/user/sickCircle/verify/v1/publishComment")
- Observable<PublishBean> getpublish(@Header("userId") Integer userId, @Header("sessionId") String sessionId, @Field("sickCircleId") Integer sickCircleId , @Field("content") String content);
+
+    //发表评论
+    //http://172.17.8.100/health/user/sickCircle/verify/v1/publishComment
+    @FormUrlEncoded
+    @POST("health/user/sickCircle/verify/v1/publishComment")
+    Observable<PublishBean> getpublish(@Header("userId") Integer userId, @Header("sessionId") String sessionId, @Field("sickCircleId") Integer sickCircleId, @Field("content") String content);
 
 }

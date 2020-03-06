@@ -75,3 +75,24 @@ public interface IBannerContract {
         void zixunList(int plateId, int page, int count);
     }
 }
+
+
+//interface IView extends IBaseView{
+//    void onBannerSuccess(BannerBean bannerBean);
+//    void onBannerFailure(Throwable e);
+//}
+//
+//interface IModel{
+//    void banner(BannerContract.IModel.IModelBack iModelBack);
+//
+//    void banner(IBannerContract.IModel.IModelBack iModelBack);
+//
+//    interface IModelBack{
+//        void onBannerSuccess(BannerBean bannerBean);
+//        void onBannerFailure(Throwable e);
+//    }
+//}
+//
+//interface IPresenter{
+//    void banner();
+//}

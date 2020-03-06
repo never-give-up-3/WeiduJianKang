@@ -1,32 +1,5 @@
 package com.wd.health.view.fragment;
 
-//import android.content.Intent;
-//import android.os.Bundle;
-//import android.support.design.widget.TabLayout;
-//import android.support.v4.app.Fragment;
-//import android.support.v4.view.ViewPager;
-//import android.util.Log;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.EditText;
-//import android.widget.ImageView;
-//import android.widget.Toast;
-//
-//import com.bumptech.glide.Glide;
-//import com.wd.health.R;
-//import com.wd.health.app.App;
-//import com.wd.health.base.BaseFragment;
-//import com.wd.health.base.CeShiFragment;
-//import com.wd.health.model.bean.BannerBean;
-//import com.wd.health.presenter.BannerPresenter;
-//
-//import java.util.ArrayList;
-//
-//import butterknife.BindView;
-//import butterknife.ButterKnife;
-//import butterknife.Unbinder;
-
 //
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -69,9 +42,6 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 
-
-
-
 //        extends CeShiFragment
 public class LeftFragment extends BaseFragment<BannerPresenter> implements IBannerContract.IView {
 
@@ -104,7 +74,6 @@ public class LeftFragment extends BaseFragment<BannerPresenter> implements IBann
     public void onBannerSuccess(BannerBean bannerBean) {
 
         if (bannerBean.getStatus().equals("0000")) {
-//            Toast.makeText(getContext(), "banner:"+bannerBean.getMessage(), Toast.LENGTH_SHORT).show();
             Log.e("left", "banner:" + bannerBean.getMessage());
             homeXbanner.setData(bannerBean.getResult(), null);
             homeXbanner.setmAutoPlayAble(true);

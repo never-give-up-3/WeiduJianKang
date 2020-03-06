@@ -12,7 +12,6 @@ package com.wd.health.presenter;
 
 import com.wd.health.app.Constant;
 import com.wd.health.base.BasePresenter;
-import com.wd.health.contract.BannerContract;
 import com.wd.health.contract.IBannerContract;
 import com.wd.health.model.BannerModel;
 import com.wd.health.model.bean.homeBean.BannerBean;
@@ -43,7 +42,28 @@ public class BannerPresenter extends BasePresenter<IBannerContract.IView> implem
         bannerModel = new BannerModel();
     }
 
+    @Override
+    public void banner() {
+        bannerModel.banner(new IBannerContract.IModel.IModelBack() {
+            @Override
+            public void onBannerSuccess(BannerBean bannerBean) {
+                if (isViewAttached()) {
+                    if (bannerBean != null && Constant.SUCCESS_CODE.equals(bannerBean.getStatus())) {
+                        getView().onBannerSuccess(bannerBean);
+                    } else {
+                        getView().onBannerFailure(new Exception("服务器异常"));
+                    }
+                }
+            }
 
+            @Override
+            public void onBannerFailure(Throwable e) {
+                if (isViewAttached()) {
+                    getView().onBannerFailure(e);
+                }
+            }
+        });
+    }
 
     @Override
     public void zixuna() {
@@ -91,10 +111,7 @@ public class BannerPresenter extends BasePresenter<IBannerContract.IView> implem
     }
 
 
-    @Override
-    public void banner() {
 
-    }
 
     /*
            搜索
