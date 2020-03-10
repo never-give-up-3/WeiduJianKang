@@ -1,7 +1,5 @@
 package com.wd.health.model.api;
 
-import com.wd.health.model.bean.BannerBean;
-
 import com.wd.health.model.bean.ChaXunShiPin_ResutBean;
 import com.wd.health.model.bean.CollectBean;
 import com.wd.health.model.bean.Commentbean;
@@ -12,19 +10,20 @@ import com.wd.health.model.bean.VideoCommentList;
 import com.wd.health.model.bean.Video_TablayoutResultBean;
 
 import com.wd.health.model.bean.DepartmentsBean;
-import com.wd.health.model.bean.LoginBean;
 import com.wd.health.model.bean.SearchSickCircleBean;
 import com.wd.health.model.bean.SickCircleInfoBean;
 import com.wd.health.model.bean.SickCircleListBean;
 import com.wd.health.model.bean.Videobuybean;
 import com.wd.health.model.bean.YanZhengMaBean;
-import com.wd.health.utils.CommonSchedulers;
+import com.wd.health.model.bean.homeBean.BannerBean;
+import com.wd.health.model.bean.homeBean.HomeSuoSouBean;
+import com.wd.health.model.bean.homeBean.JKZXBean;
+import com.wd.health.model.bean.homeBean.JKZiXunListBean;
 
 
 import java.util.Map;
 
 import io.reactivex.Observable;
-import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -50,6 +49,25 @@ public interface IApi {
     //banner轮播
     @GET("share/v1/bannersShow")
     Observable<BannerBean> banner();
+
+    //首页搜索
+    //http://172.17.8.100/health/share/v1/homePageSearch
+    @GET("share/v1/homePageSearch")
+    Observable<HomeSuoSouBean>  homePageSearch(@Query("keyWord")String keyWord);
+
+    //健康咨询
+//    http://172.17.8.100/health/share/information/v1/findInformationPlateList
+    @GET("share/information/v1/findInformationPlateList")
+    Observable<JKZXBean> findInformationPlateList();
+
+    //健康咨询列表
+//    http://172.17.8.100/health/share/information/v1/findInformationList
+    @GET("share/information/v1/findInformationList")
+    Observable<JKZiXunListBean> findInformationList(@Query("plateId")int plateId, @Query("page")int page, @Query("count")int count );
+
+    //复制
+    @GET("share/information/v1/findInformationList")
+    Observable<JKZiXunListBean> findInformationList2(@Query("plateId")int plateId,@Query("page")int page,@Query("count")int count );
 
 
     @GET("user/video/v1/findVideoCategoryList")
